@@ -1,6 +1,6 @@
 function ExampleScene(){
     /* starting time of this scene in milliseconds, must be defined */
-    this.startTime = 10000;
+    this.startTime =40000;
     /* short name of this scene, must be defined */
     this.NAME = 'example';
 }
@@ -15,7 +15,7 @@ ExampleScene.prototype.init = function(cb){
     var sphereMaterial = new THREE.MeshLambertMaterial({color: 0xCC0000});
     var material = new THREE.MeshBasicMaterial( { color: 0x666666, wireframe: true, wireframeLinewidth: 4 } );
 
-    this.sphere = new THREE.Mesh( new THREE.CubeGeometry(
+    this.sphere = new THREE.Mesh( new THREE.SphereGeometry(
         50, 16, 16), material);
 
     this.scene.add(this.sphere);
