@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <title>AbelLan | run</title>
+        <style>
+            html,body{overflow:hidden;background:#000;padding:0;margin:0;border:0;outline:0;}
+            canvas{background:#000;}
+            .p-wrapper {
+                position: relative;
+                width: 100%;
+                text-align: center;
+                padding-top: 6em;
+            }
+            p {
+                padding: 10px;
+                color:#ccc;
+                font-family: Georgia, sans-serif;
+                font-size:3em;
+
+            }
+            h6 {
+                font-size:18px;
+                font-family: Georgia, sans-serif;
+                color:#666;
+                font-weight:300;
+            }
+            p.warning {
+              font-size: 1em;
+                text-align: center;
+            }
+            a {
+              color: #fff;
+            }
+        </style>
+
+        <!-- libs -->
+        <script src=lib/three.min.js></script>
+
+        <!-- framework -->
+        <script src=src/bootstrap.js></script>
+        <script src=src/SceneManager.js></script>
+        <script src=src/Helpers.js></script>
+        <script src=src/Twyk.js></script>
+        <script src=src/CameraHelpers.js></script>
+
+        <!-- scenes -->
+        <script src=src/CubeBuilderScene.js></script>
+        <script src=src/ExampleScene.js></script>
+
+    </head>
+    <body onload=bootstrap()>
+        <script>
+          notChrome = !(/Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor));
+          if (notChrome) {
+            document.write('<p class="warning" id="notChrome">We recommend using <a target="_blank" href="http://www.google.com/chrome/">Chrome</a> for viewing this demo.<br>It looks like you are not using Chrome, so the demo might not work.</p>');
+          }
+          runLocally = location.protocol === 'file:';
+          if (runLocally) {
+            document.write('<p class="warning" id="runLocally">When running this demo locally, remember to <a target="_blank" href="https://github.com/mrdoob/three.js/wiki/How-to-run-things-locally#change-local-files-security-policy-in-chrome">start Chrome with the --allow-file-access-from-files flag</a> in order to make it work.</p>');
+          }
+        </script>
+      <audio id=music>
+          <source src="res/Lamb-AutumnRain.mp3" type="audio/mpeg">
+      </audio>
+    </body>
+</html>
