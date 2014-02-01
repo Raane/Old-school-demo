@@ -7,13 +7,13 @@ function CubeBuilderScene(){
 
     this.cube_size = 4;
     this.cube_leg_thickness = 0.1;
-    this.short_animaion_duration = 3000;
+    this.short_animaion_duration = 1000;
     this.long_animation_duration = 5000;
     this.line_animation_start = 0;
     this.rectangle_animation_start = 5000;
     this.rectangle_spin_animation_start = 10000;
     this.rectangle_solidify_animation_start = 15000;
-    this.cube_animation_start = 18000;
+    this.cube_animation_start = 16000;
 }
 
 CubeBuilderScene.prototype.init = function(cb){
@@ -57,7 +57,7 @@ CubeBuilderScene.prototype.update = function(){
         var cubesToScale = [0,2,4,6];
         for(var i=0;i<cubesToScale.length;i++) {
             this.cubes[cubesToScale[i]].position.y = 2*GU-t*4*GU/(this.long_animation_duration*2);
-            this.cubes[cubesToScale[i]].scale.set(0.1, t*this.cube_size+this.cube_leg_thickness/this.long_animation_duration, 0);
+            this.cubes[cubesToScale[i]].scale.set(0.1, t*(this.cube_size+this.cube_leg_thickness)/this.long_animation_duration, 0);
         }
         var cubesToMove = [3,8,7,11]
         for(var i=0;i<cubesToMove.length;i++) {
@@ -69,7 +69,7 @@ CubeBuilderScene.prototype.update = function(){
        var cubesToScale = [1,3,5,7];
         for(var i=0;i<cubesToScale.length;i++) {
             this.cubes[cubesToScale[i]].position.x = -2*GU+(t-this.long_animation_duration)*4*GU/(this.long_animation_duration*2);
-            this.cubes[cubesToScale[i]].scale.set((t-this.long_animation_duration)*this.cube_size+this.cube_leg_thickness/this.long_animation_duration, 0.1, 0);
+            this.cubes[cubesToScale[i]].scale.set((t-this.long_animation_duration)*(this.cube_size+this.cube_leg_thickness)/this.long_animation_duration, 0.1, 0);
         }
         var cubesToMove = [2,10,11,6]
         for(var i=0;i<cubesToMove.length;i++) {
@@ -102,7 +102,7 @@ CubeBuilderScene.prototype.update = function(){
         var cubesToScale = [8,9,10,11];
         for(var i=0;i<cubesToScale.length;i++) {
             this.cubes[cubesToScale[i]].position.z = 2*GU-(t-this.cube_animation_start)*4*GU/(this.long_animation_duration*2);
-            this.cubes[cubesToScale[i]].scale.set(0.1, 0.1, (t-this.cube_animation_start)*this.cube_size+this.cube_leg_thickness/this.long_animation_duration);
+            this.cubes[cubesToScale[i]].scale.set(0.1, 0.1, (t-this.cube_animation_start)*(this.cube_size+this.cube_leg_thickness)/this.long_animation_duration);
         }
         var cubesToMove = [4,5,6,7]
         for(var i=0;i<cubesToMove.length;i++) {
