@@ -18,15 +18,21 @@ function CubeBuilderScene(){
 
 CubeBuilderScene.prototype.init = function(cb){
     /* do loady stuff here */
-
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(45, 16/9, 0.1, 10000);
     this.scene.add(this.camera);
 
-    var material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF, wireframe: false, wireframeLinewidth: 4000 } );
+    this.initAsciiShader();
+    this.initCubes();
 
+    /* call cb when you are done loading! */
+    cb();
+}
+
+CubeBuilderScene.prototype.initCubes = function() {
+    // Load the cubes
+    var material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF, wireframe: false, wireframeLinewidth: 4000 } );
     this.cubes = new Array();
-    
     for(var i=0;i<12;i++) {
         this.cubes[i] = new THREE.Mesh( new THREE.CubeGeometry(
         GU, GU, GU), material);
@@ -36,13 +42,14 @@ CubeBuilderScene.prototype.init = function(cb){
         this.cubes[i].scale.set(this.cube_leg_thickness,this.cube_leg_thickness,0);
         this.scene.add(this.cubes[i]);
     }
+}
 
-    tmpCube = this.cubes[0];
-
-
-
-    /* call cb when you are done loading! */
-    cb();
+CubeBuilderScene.prototype.initAsciiShader = function() {
+    this.composer = new THREE.EffectComposer(renderer, RENDERTARGET);
+    this.composer.addPass( new THREE.RenderPass(this.scene, this.camera));
+    var effect = new THREE.ShaderPass(AsciiShader);
+    effect.renderToScreen = true;
+    this.composer.addPass(effect);
 }
 
 CubeBuilderScene.prototype.reset = function(){
@@ -116,6 +123,7 @@ CubeBuilderScene.prototype.update = function(){
 
 CubeBuilderScene.prototype.render = function(){
     /* do rendery stuff here */
-    renderer.render(this.scene, this.camera);
+    //renderer.render(this.scene, this.camera);
+    this.composer.render();
 
 }

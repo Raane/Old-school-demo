@@ -47,6 +47,7 @@ function start(){
     dt = 0;
 
     sm = new SceneManager();
+    sm.addScene(new OpeningScene());
     sm.addScene(new CubeBuilderScene());
     sm.addScene(new ExampleScene());
     sm.initScenes(function(){
@@ -71,7 +72,7 @@ function readytostart(){
 
 function actuallystart(){
     music.play();
-    sm.jumpToScene('cubeBuilder');
+    sm.jumpToScene('opening');
     renderer.domElement.style.opacity = 1;
     setTimeout(loop, 0);
 }
@@ -79,9 +80,9 @@ function actuallystart(){
 function bootstrap(){
     document.addEventListener("keydown",function(e){
         if(e.keyCode == /*ENTER*/ 13) {
-        	document.body.removeChild(document.getElementById('startText'));
-        	if (notChrome) document.body.removeChild(document.getElementById('notChrome'));
-        	if (runLocally) document.body.removeChild(document.getElementById('runLocally'));
+            document.body.removeChild(document.getElementById('startText'));
+            if (notChrome) document.body.removeChild(document.getElementById('notChrome'));
+            if (runLocally) document.body.removeChild(document.getElementById('runLocally'));
             setTimeout(actuallystart, 100);
         }
 
