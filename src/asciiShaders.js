@@ -20,7 +20,7 @@ var AsciiShader = {
         "varying vec2 vUv;",
         
         "void main() {",
-            "float w = 80.;",
+            "float w = 100.;",
             "vec2 ratio = vec2(16.,9.)*w/16.;",
             "vec4 texel = vec4(1.);",
             "texel = 0.1 + 0.9*texture2D( tDiffuse, floor(vUv*ratio) / ratio);",
