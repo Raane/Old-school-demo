@@ -17,6 +17,8 @@ function CubeBuilderScene(){
     this.cube_animation_start = 16000;
     this.cube_spin_animation_start = 21000;
     this.cube_spin_animation_start2 = 23000;
+    this.minecraft_cover_time = 23000;
+    this.minecraft_cube_time = 24320;
     this.cube_spin_animation_start3 = 26000;
     this.cover_add_time = 27499;
 
@@ -51,11 +53,18 @@ CubeBuilderScene.prototype.initCubes = function() {
         this.cubes[i].scale.set(this.cube_leg_thickness,this.cube_leg_thickness,0);
         this.complete_cube.add(this.cubes[i]);
     }
+    
     var black_material = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: false, wireframeLinewidth: 4000 } );
     this.black_cover = new THREE.Mesh( new THREE.CubeGeometry(
     GU, GU, GU), black_material);
     this.black_cover.scale.set(0,this.cube_size+this.cube_leg_thickness, this.cube_size+this.cube_leg_thickness);
     this.black_cover.position.x = (this.cube_size+this.cube_leg_thickness)/2*1.01*GU;
+    
+    var minecraft_material = new THREE.MeshBasicMaterial( { color: 0x888888, wireframe: false, wireframeLinewidth: 4000 } );
+    this.minecraft_cover = new THREE.Mesh( new THREE.CubeGeometry(
+    GU, GU, GU), minecraft_material);
+    this.minecraft_cover.scale.set(0,this.cube_size+this.cube_leg_thickness, this.cube_size+this.cube_leg_thickness);
+    this.minecraft_cover.position.x = (this.cube_size+this.cube_leg_thickness)/2*1.01*GU;
 }
 
 CubeBuilderScene.prototype.initAsciiShader = function() {
