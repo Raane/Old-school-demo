@@ -59,7 +59,7 @@
     </head>
     <body onload=bootstrap()>
         <script>
-          notChrome = !(/Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor));
+          notChrome = false; //!(/Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor));
           if (notChrome) {
             document.write('<p class="warning" id="notChrome">We recommend using <a target="_blank" href="http://www.google.com/chrome/">Chrome</a> for viewing this demo.<br>It looks like you are not using Chrome, so the demo might not work.</p>');
           }
