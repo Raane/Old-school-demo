@@ -16,12 +16,12 @@ OpeningScene.prototype.init = function(cb){
     this.scene.add(this.camera);
 
     this.abellan_type_speed = 100;
-    this.welcome_to_type_speed = 800;
+    this.welcome_to_type_speed = 600;
     this.caret_frequency = 530;
-    this.welcome_delay = 4000;
-    this.to_delay = 2000;
-    this.to_type_time = 11800;
-    this.abellan_delay = 10000;
+    this.welcome_delay = 3000;
+    this.to_delay = 1500;
+    this.to_type_time = 10600;
+    this.abellan_delay = 14400;
 
     this.intro_string = "welcome to";
     this.abellan_strings = new Array();
@@ -92,7 +92,7 @@ OpeningScene.prototype.update = function(){
                     new THREE.PlaneGeometry(this.abellan_canvases[i][j].width, this.abellan_canvases[i][j].height),
                     abellan_text_material
                     );
-            this.abellan_text_meshes[i][j].position.set(-125+100*j, 32-i*8,0);
+            this.abellan_text_meshes[i][j].position.set(-125+100*j, 20-i*8,0);
             this.abellan_text_meshes[i][j].scale.set(0.35,0.3,0.3);
             this.scene.add( this.abellan_text_meshes[i][j] );
         }

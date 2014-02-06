@@ -1,7 +1,7 @@
 
 function CubeBuilderScene(){
     /* starting time of this scene in milliseconds, must be defined */
-    this.startTime = 15000;
+    this.startTime = 23000;
     /* short name of this scene, must be defined */
     this.NAME = 'cubeBuilder';
 
@@ -103,7 +103,7 @@ CubeBuilderScene.prototype.update = function(){
     //Spin the rectangle smoothly one round
     if(this.t>this.rectangle_spin_animation_start && this.t<=this.rectangle_solidify_animation_start) {
         this.camera.rotation.z = Math.PI-Math.PI*Math.cos((this.t-this.rectangle_spin_animation_start)/this.long_animation_duration*Math.PI);
-        this.complete_cube.rotation.y = (Math.PI - Math.PI*Math.cos((this.t-this.rectangle_spin_animation_start)/this.long_animation_duration*Math.PI))/4*5;
+        this.complete_cube.rotation.y = (Math.PI - Math.PI*Math.cos((this.t-this.rectangle_spin_animation_start)/this.long_animation_duration*Math.PI))/4;
 
     }
     //Make the rectangle solid
