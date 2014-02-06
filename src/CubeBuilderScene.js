@@ -17,12 +17,14 @@ function CubeBuilderScene(){
     this.cube_animation_start = 16000;
     this.cube_spin_animation_start = 21000;
     this.cube_spin_animation_start2 = 23000;
-    this.minecraft_cover_time = 23000;
+    this.minecraft_cover_time = 23600;
     this.minecraft_cube_time = 24320;
     this.cube_spin_animation_start3 = 26000;
     this.cover_add_time = 27499;
 
     this.covered = false;
+    this.minecraft_covered = false;
+    this.minecraft_cubed = false;
 }
 
 CubeBuilderScene.prototype.init = function(cb){
@@ -33,6 +35,7 @@ CubeBuilderScene.prototype.init = function(cb){
 
     this.initAsciiShader();
     this.initCubes();
+    this.initLight();
 
     /* call cb when you are done loading! */
     cb();
@@ -54,17 +57,24 @@ CubeBuilderScene.prototype.initCubes = function() {
         this.complete_cube.add(this.cubes[i]);
     }
     
+    
+    this.minecraft_texture = THREE.ImageUtils.loadTexture( 'res/wood.png' );
+    this.minecraft_material = new THREE.MeshLambertMaterial({
+                map: this.minecraft_texture
+              });
+    this.minecraft_cover = new THREE.Mesh( new THREE.CubeGeometry(GU, GU, GU), this.minecraft_material);
+    this.minecraft_cover.scale.set(0,this.cube_size+this.cube_leg_thickness, this.cube_size+this.cube_leg_thickness);
+    this.minecraft_cover.position.x = (this.cube_size+this.cube_leg_thickness)/2*1.04*GU;
+
+    this.minecraft_cube = new THREE.Mesh( new THREE.CubeGeometry(GU, GU, GU), this.minecraft_material);
+    this.minecraft_cube.scale.set(this.cube_size+this.cube_leg_thickness*1.04,this.cube_size+this.cube_leg_thickness*1.02, this.cube_size+this.cube_leg_thickness*1.02);
+//    this.minecraft_cover.position.x = (this.cube_size+this.cube_leg_thickness)/2*1.01*GU;
+
     var black_material = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: false, wireframeLinewidth: 4000 } );
     this.black_cover = new THREE.Mesh( new THREE.CubeGeometry(
     GU, GU, GU), black_material);
     this.black_cover.scale.set(0,this.cube_size+this.cube_leg_thickness, this.cube_size+this.cube_leg_thickness);
-    this.black_cover.position.x = (this.cube_size+this.cube_leg_thickness)/2*1.01*GU;
-    
-    var minecraft_material = new THREE.MeshBasicMaterial( { color: 0x888888, wireframe: false, wireframeLinewidth: 4000 } );
-    this.minecraft_cover = new THREE.Mesh( new THREE.CubeGeometry(
-    GU, GU, GU), minecraft_material);
-    this.minecraft_cover.scale.set(0,this.cube_size+this.cube_leg_thickness, this.cube_size+this.cube_leg_thickness);
-    this.minecraft_cover.position.x = (this.cube_size+this.cube_leg_thickness)/2*1.01*GU;
+    this.black_cover.position.x = (this.cube_size+this.cube_leg_thickness)/2*1.08*GU;
 }
 
 CubeBuilderScene.prototype.initAsciiShader = function() {
@@ -75,6 +85,10 @@ CubeBuilderScene.prototype.initAsciiShader = function() {
     this.composer.addPass(effect);
 }
 
+CubeBuilderScene.prototype.initLight = function() {
+    var ambientLight = new THREE.AmbientLight(0xbbbbbb);
+    this.scene.add(ambientLight);
+}
 CubeBuilderScene.prototype.reset = function(){
     /* reset all the variables! */
 
@@ -153,10 +167,20 @@ CubeBuilderScene.prototype.update = function(){
     if(this.t>this.cube_spin_animation_start3 && this.t<=this.cube_spin_animation_start3+this.medium_animation_duration) {
         this.complete_cube.rotation.y = Math.PI - Math.PI*Math.cos((this.t-this.cube_spin_animation_start3)/this.medium_animation_duration*Math.PI);
     }
+    if(this.t>this.minecraft_cover_time && !this.minecraft_covered) {
+        this.complete_cube.add(this.minecraft_cover);
+        this.minecraft_covered = true;
+    }
+    if(this.t>this.minecraft_cube_time && !this.minecraft_cubed) {
+        this.complete_cube.add(this.minecraft_cube);
+        this.minecraft_cubed = true;
+        for(var i=0;i<this.cubes.length;i++) {
+            this.cubes[i].scale.set(0,0,0);;
+        }
+    }
     if(this.t>this.cover_add_time && !this.covered) {
         this.complete_cube.add(this.black_cover);
         this.covered = true;
-        console.log("hit");
     }
 }
 

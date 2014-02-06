@@ -94,7 +94,7 @@ OpeningScene.prototype.update = function(){
                     );
             this.abellan_text_meshes[i][j].position.set(-125+100*j, 20-i*8,0);
             this.abellan_text_meshes[i][j].scale.set(0.35,0.3,0.3);
-            this.scene.add( this.abellan_text_meshes[i][j] );
+            //this.scene.add( this.abellan_text_meshes[i][j] );
         }
     }
 

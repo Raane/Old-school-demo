@@ -1,6 +1,6 @@
 function ExampleScene(){
     /* starting time of this scene in milliseconds, must be defined */
-    this.startTime =40000;
+    this.startTime =550000;
     /* short name of this scene, must be defined */
     this.NAME = 'example';
 }
