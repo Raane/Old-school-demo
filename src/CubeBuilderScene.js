@@ -157,27 +157,34 @@ CubeBuilderScene.prototype.update = function(){
         }
         
     }
+    //Spin the cube on one axes
     if(this.t>this.cube_spin_animation_start && this.t<=this.cube_spin_animation_start+this.long_animation_duration) {
         this.complete_cube.rotation.y = Math.PI - Math.PI*Math.cos((this.t-this.cube_spin_animation_start)/this.long_animation_duration*Math.PI);
     }
+    //Spin the cube on three axii
     if(this.t>this.cube_spin_animation_start2 && this.t<=this.cube_spin_animation_start2+this.medium_animation_duration) {
         this.complete_cube.rotation.x = Math.PI - Math.PI*Math.cos((this.t-this.cube_spin_animation_start2)/this.medium_animation_duration*Math.PI/2);
         this.complete_cube.rotation.z = Math.PI - Math.PI*Math.cos((this.t-this.cube_spin_animation_start2)/this.medium_animation_duration*Math.PI/2);
     }
+    //Spin the cube on one axis
     if(this.t>this.cube_spin_animation_start3 && this.t<=this.cube_spin_animation_start3+this.medium_animation_duration) {
         this.complete_cube.rotation.y = Math.PI - Math.PI*Math.cos((this.t-this.cube_spin_animation_start3)/this.medium_animation_duration*Math.PI);
     }
+    //Add a minecraft cover to a hidden side of the cube
     if(this.t>this.minecraft_cover_time && !this.minecraft_covered) {
         this.complete_cube.add(this.minecraft_cover);
         this.minecraft_covered = true;
     }
+    //Cover the white cube in a minecraft cube
     if(this.t>this.minecraft_cube_time && !this.minecraft_cubed) {
         this.complete_cube.add(this.minecraft_cube);
         this.minecraft_cubed = true;
+        //This is to hide the white cube inside, as it sometimes will glitch through
         for(var i=0;i<this.cubes.length;i++) {
             this.cubes[i].scale.set(0,0,0);;
         }
     }
+    //Add a black cover to the cube to hide the transition to real graphics
     if(this.t>this.cover_add_time && !this.covered) {
         this.complete_cube.add(this.black_cover);
         this.covered = true;
