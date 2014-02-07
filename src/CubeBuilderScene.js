@@ -188,6 +188,7 @@ CubeBuilderScene.prototype.update = function(){
     if(this.t>this.cover_add_time && !this.covered) {
         this.complete_cube.add(this.black_cover);
         this.covered = true;
+        this.complete_cube.remove(this.minecraft_cover);
     }
 }
 
