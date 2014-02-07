@@ -49,7 +49,7 @@ function start(){
     sm = new SceneManager();
     sm.addScene(new OpeningScene());
     sm.addScene(new CubeBuilderScene());
-    sm.addScene(new ExampleScene());
+    sm.addScene(new MinecraftScene());
     sm.initScenes(function(){
         sm.warmup();
         readytostart();
