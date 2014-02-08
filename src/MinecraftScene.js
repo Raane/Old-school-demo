@@ -24,6 +24,7 @@ MinecraftScene.prototype.init = function(cb){
     this.initGround();
     this.initFog();
     this.initSkyBox();
+    this.initFadeplane();
     camera = this.camera;
     /* call cb when you are done loading! */
     cb();
@@ -119,6 +120,18 @@ MinecraftScene.prototype.initSkyBox = function() {
 
 }
 
+MinecraftScene.prototype.initFadeplane = function() {
+    this.fade_material = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: false, wireframeLinewidth: 4000 } );
+    this.fade_material.transparent = true;
+    this.fade_material.side = THREE.DoubleSide;
+    this.fade_box = new THREE.Mesh( new THREE.CubeGeometry(
+    GU, GU, GU), this.fade_material);
+    this.fade_box.scale.set(10*GU, 10*GU, 0);
+    this.fade_box.position.z = -3*GU;
+    this.scene.add(this.fade_box);
+
+}
+
 MinecraftScene.prototype.reset = function(){
     /* reset all the variables! */
     this.camera.position.z = 9.2*GU;
@@ -128,7 +141,6 @@ MinecraftScene.prototype.update = function(){
     /* do updatey stuff here */
     this.t = t - this.startTime;
     if(this.t<12000) {
-        console.log("hit")
         for(var i=0;i<this.old_school_coordinates.length;i++) {
             var random_number_x = 0.25+(i%20)/10*(i%2+i%3+i%4)/3;
             var random_number_y = 0.25+((i-10)%20)/10*(i%2+i%3+i%4)/3;
@@ -143,6 +155,12 @@ MinecraftScene.prototype.update = function(){
     if(this.t>0 && this.t<2000) {
         this.camera.position.z = 9.2*GU+(this.t)*GU/300;
     }
+
+    if(this.t>0 && this.t<2000) {
+        //this.fade_box.materials[0].opacity = 3000-this.t;
+        this.fade_material.opacity = (2000-this.t)/2000;
+    }
+
     if(this.t>2000 && this.t<12000) {
         this.camera.position.x = -(this.t-2000)*GU/250;
         this.camera.position.y = (this.t-2000)*GU/2000
