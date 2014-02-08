@@ -8,7 +8,7 @@ function MinecraftScene(){
 MinecraftScene.prototype.init = function(cb){
     /* do loady stuff here */
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(45, 16/9, 0.1, 90000);
+    this.camera = new THREE.PerspectiveCamera(45, 16/9, 0.1, 2000*GU);
     this.scene.add(this.camera);
     
     this.cube_size = 4;
@@ -110,6 +110,13 @@ MinecraftScene.prototype.initFog = function() {
 }
 
 MinecraftScene.prototype.initSkyBox = function() {
+    var sky_material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF, wireframe: false, wireframeLinewidth: 4000 } );
+    sky_material.side = THREE.DoubleSide;
+    var sky_box = new THREE.Mesh( new THREE.CubeGeometry(
+    GU, GU, GU), sky_material);
+    sky_box.scale.set(this.ground_size, this.ground_size, this.ground_size);
+    this.scene.add(sky_box);
+
 }
 
 MinecraftScene.prototype.reset = function(){
