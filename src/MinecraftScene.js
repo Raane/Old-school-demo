@@ -8,7 +8,7 @@ function MinecraftScene(){
 MinecraftScene.prototype.init = function(cb){
     /* do loady stuff here */
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(45, 16/9, 0.1, 20000);
+    this.camera = new THREE.PerspectiveCamera(45, 16/9, 0.1, 90000);
     this.scene.add(this.camera);
     
     this.cube_size = 4;
@@ -16,12 +16,14 @@ MinecraftScene.prototype.init = function(cb){
     this.cubes = new Array();
     this.signs = new Array();
     this.signs_added = false;
+    this.ground_size = 40*GU;
 
     this.initCoorArray();
     this.initLight();
     this.initCubes();
     this.initGround();
     this.initFog();
+    this.initSkyBox();
     camera = this.camera;
     /* call cb when you are done loading! */
     cb();
@@ -89,17 +91,25 @@ MinecraftScene.prototype.initLight = function() {
 }
 
 MinecraftScene.prototype.initGround = function() {
-    var ground_texture = THREE.ImageUtils.loadTexture( 'res/wood.png' );
-    var ground_material = new THREE.MeshLambertMaterial({
+    var ground_texture_repeat = 600;
+    var ground_texture = THREE.ImageUtils.loadTexture( 'res/grass.png' );
+    ground_texture.wrapS = THREE.RepeatWrapping;
+    ground_texture.wrapT = THREE.RepeatWrapping;
+    ground_texture.repeat.set(ground_texture_repeat,ground_texture_repeat);
+    var ground_material = new THREE.MeshBasicMaterial({
                 map: ground_texture
               });
     var ground = new THREE.Mesh( new THREE.CubeGeometry(GU, GU, GU), ground_material);
-    ground.scale.set(200,2,200);
-    ground.position.y = -2.5*4.35*GU;
+    ground.scale.set(this.ground_size,0,this.ground_size);
+    ground.position.y = -2.35*4.35*GU;
     this.scene.add(ground);
 }
 
 MinecraftScene.prototype.initFog = function() {
+    this.scene.fog = new THREE.FogExp2( 0xffffff, 0.0000015*GU );
+}
+
+MinecraftScene.prototype.initSkyBox = function() {
 }
 
 MinecraftScene.prototype.reset = function(){
@@ -159,14 +169,14 @@ MinecraftScene.prototype.update = function(){
     }
     if(this.t>16000 && this.t<20000) {
         var old_z = -90*GU;
-        var new_z = -80*GU;
+        var new_z = -76*GU;
         var ratio = (this.t-16000)/4000;
         this.camera.position.z = new_z*ratio+old_z*(1-ratio);
         var old_x = 0;
         var new_x = -4.35*2*GU;
         this.camera.lookAt(new THREE.Vector3(new_x*ratio+old_x*(1-ratio),0,-60*GU));
         var old_y = 5*GU;
-        var new_y = 0;
+        var new_y = 1.5*GU;
         var ratio = (this.t-16000)/4000;
         this.camera.position.y = new_y*ratio+old_y*(1-ratio);
     }
@@ -179,15 +189,15 @@ MinecraftScene.prototype.update = function(){
     }
 
     if(this.t>23000 && this.t<24000) {
-        var old_y = 0;
-        var new_y = -4.35*GU;
+        var old_y = 1.5*GU;
+        var new_y = -2.85*GU;
         var ratio = (this.t-23000)/1000;
         this.camera.position.y = new_y*ratio+old_y*(1-ratio);
     }
     
     if(this.t>25000 && this.t<26000) {
-        var old_y = -4.35*GU;
-        var new_y = -4.35*1.75*GU;
+        var old_y = -2.85*GU;
+        var new_y = -4.35*1.75*GU+1.4*GU;
         var ratio = (this.t-25000)/1000;
         this.camera.position.y = new_y*ratio+old_y*(1-ratio);
     }
