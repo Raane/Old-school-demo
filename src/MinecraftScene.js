@@ -20,6 +20,8 @@ MinecraftScene.prototype.init = function(cb){
     this.initCoorArray();
     this.initLight();
     this.initCubes();
+    this.initGround();
+    this.initFog();
     camera = this.camera;
     /* call cb when you are done loading! */
     cb();
@@ -38,7 +40,7 @@ MinecraftScene.prototype.initCubes = function(cb){
         this.cubes[i] = new THREE.Mesh( new THREE.CubeGeometry(GU, GU, GU), this.minecraft_material);
         this.cubes[i].scale.set(this.cube_size+this.cube_leg_thickness*1.04,this.cube_size+this.cube_leg_thickness*1.02, this.cube_size+this.cube_leg_thickness*1.02);
         this.scene.add(this.cubes[i]);
-    }
+        }
     var sign_texture_images = [
         "sign_old_school.png",
         "sign_run.png",
@@ -84,6 +86,20 @@ MinecraftScene.prototype.initCubes = function(cb){
 MinecraftScene.prototype.initLight = function() {
     var ambientLight = new THREE.AmbientLight(0xbbbbbb);
     this.scene.add(ambientLight);
+}
+
+MinecraftScene.prototype.initGround = function() {
+    var ground_texture = THREE.ImageUtils.loadTexture( 'res/wood.png' );
+    var ground_material = new THREE.MeshLambertMaterial({
+                map: ground_texture
+              });
+    var ground = new THREE.Mesh( new THREE.CubeGeometry(GU, GU, GU), ground_material);
+    ground.scale.set(200,2,200);
+    ground.position.y = -2.5*4.35*GU;
+    this.scene.add(ground);
+}
+
+MinecraftScene.prototype.initFog = function() {
 }
 
 MinecraftScene.prototype.reset = function(){
@@ -171,7 +187,7 @@ MinecraftScene.prototype.update = function(){
     
     if(this.t>25000 && this.t<26000) {
         var old_y = -4.35*GU;
-        var new_y = -4.35*2*GU;
+        var new_y = -4.35*1.75*GU;
         var ratio = (this.t-25000)/1000;
         this.camera.position.y = new_y*ratio+old_y*(1-ratio);
     }
