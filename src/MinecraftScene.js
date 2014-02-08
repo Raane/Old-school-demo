@@ -206,25 +206,29 @@ MinecraftScene.prototype.update = function(){
         this.camera.position.y = new_y*ratio+old_y*(1-ratio);
     }
 
-    if(this.t>21000 && this.t<22000) {
+    if(this.t>21000 && this.t<23000) {
         var old_x = -4.35*2*GU;
         var new_x = 0;
-        var ratio = (this.t-21000)/1000;
+        var ratio = (this.t-21000)/2000;
         this.camera.position.x = new_x*ratio+old_x*(1-ratio);
     }
 
-    if(this.t>23000 && this.t<24000) {
+    if(this.t>25000 && this.t<27000) {
         var old_y = 1.5*GU;
         var new_y = -2.85*GU;
-        var ratio = (this.t-23000)/1000;
+        var ratio = (this.t-25000)/2000;
         this.camera.position.y = new_y*ratio+old_y*(1-ratio);
     }
     
-    if(this.t>25000 && this.t<26000) {
+    if(this.t>29000 && this.t<31000) {
         var old_y = -2.85*GU;
         var new_y = -4.35*1.75*GU+1.4*GU;
-        var ratio = (this.t-25000)/1000;
+        var ratio = (this.t-29000)/2000;
         this.camera.position.y = new_y*ratio+old_y*(1-ratio);
+    }
+
+    if(this.t>33000 && this.t<40000) {
+        this.camera.rotation.x = -(this.t-33000)/7000*Math.PI/3*2-3.0463619812853624;
     }
 }
 
