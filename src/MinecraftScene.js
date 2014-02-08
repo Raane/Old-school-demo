@@ -14,6 +14,7 @@ MinecraftScene.prototype.init = function(cb){
     this.cube_size = 4;
     this.cube_leg_thickness = 0.35;
     this.cubes = new Array();
+    this.signs = new Array();
 
     this.initCoorArray();
     this.initLight();
@@ -28,12 +29,27 @@ MinecraftScene.prototype.initCubes = function(cb){
     this.minecraft_material = new THREE.MeshLambertMaterial({
                 map: this.minecraft_texture
               });
+    var extra_cube = new THREE.Mesh( new THREE.CubeGeometry(GU, GU, GU), this.minecraft_material);
+    extra_cube.scale.set(this.cube_size+this.cube_leg_thickness*1.04,this.cube_size+this.cube_leg_thickness*1.02, this.cube_size+this.cube_leg_thickness*1.02);
+    extra_cube.position.z = 0.1*GU;
+    this.scene.add(extra_cube);
     for(var i=0;i<this.old_school_coordinates.length;i++) {
         this.cubes[i] = new THREE.Mesh( new THREE.CubeGeometry(GU, GU, GU), this.minecraft_material);
         this.cubes[i].scale.set(this.cube_size+this.cube_leg_thickness*1.04,this.cube_size+this.cube_leg_thickness*1.02, this.cube_size+this.cube_leg_thickness*1.02);
         this.scene.add(this.cubes[i]);
     }
 
+    for(var i=0;i<1;i++) {
+        var sign_texture = THREE.ImageUtils.loadTexture( 'res/wood.png' );
+        var sign_material = new THREE.MeshLambertMaterial({
+                map: sign_texture
+              });
+        this.signs[i] = new THREE.Mesh( new THREE.CubeGeometry(GU, GU, GU), sign_material);
+        this.signs[i].scale.set(this.cube_size+this.cube_leg_thickness*1.04,this.cube_size+this.cube_leg_thickness*1.02, this.cube_size+this.cube_leg_thickness*1.02);
+        this.signs[i].position.z = 3*GU;
+        this.scene.add(this.signs[i]);
+        
+    }
 }
 MinecraftScene.prototype.initLight = function() {
     var ambientLight = new THREE.AmbientLight(0xbbbbbb);
