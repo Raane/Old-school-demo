@@ -1,7 +1,7 @@
 
 function CubeBuilderScene(){
     /* starting time of this scene in milliseconds, must be defined */
-    this.startTime = 23000;
+    this.startTime = 13000;
     /* short name of this scene, must be defined */
     this.NAME = 'cubeBuilder';
 

@@ -15,13 +15,13 @@ OpeningScene.prototype.init = function(cb){
     this.camera = new THREE.OrthographicCamera( width / - 2, width / 2, height / 2, height / - 2, 1, 1000 );
     //this.scene.add(this.camera);
 
-    this.abellan_type_speed = 100;
-    this.welcome_to_type_speed = 600;
+    this.abellan_type_speed = 40;
+    this.welcome_to_type_speed = 400;
     this.caret_frequency = 520;
-    this.welcome_delay = 3000;
+    this.welcome_delay = 1500;
     this.to_delay = 1500;
-    this.to_type_time = 10600;
-    this.abellan_delay = 14400;
+    this.to_type_time = 6420;
+    this.abellan_delay = 8200;
 
     this.intro_string = "welcome to";
     this.abellan_strings = new Array();
@@ -59,11 +59,11 @@ OpeningScene.prototype.update = function(){
         this.intro_canvas.getContext('2d').fillStyle = "rgba(255,255,255,1)";
         var string_to_show = "";
         if(t<this.to_type_time) {
-            string_to_show = this.intro_string.substring(0,Math.min(Math.floor((t-this.welcome_delay)/800),this.intro_string.length-3));
+            string_to_show = this.intro_string.substring(0,Math.min(Math.floor((t-this.welcome_delay)/this.welcome_to_type_speed),this.intro_string.length-3));
         } else {
-            string_to_show = this.intro_string.substring(0,Math.min(Math.floor((t-this.welcome_delay-this.to_delay)/800),this.intro_string.length));
+            string_to_show = this.intro_string.substring(0,Math.min(Math.floor((t-this.welcome_delay-this.to_delay)/this.welcome_to_type_speed),this.intro_string.length));
         }
-        if(t%(this.welcome_to_type_speed*2)<this.welcome_to_type_speed) string_to_show += "_";
+        if(t%(this.caret_frequency*2)<this.caret_frequency) string_to_show += "_";
         this.intro_canvas.getContext('2d').fillText(string_to_show, 0, 30);
         this.intro_text_texture = new THREE.Texture(this.intro_canvas); 
         this.intro_text_texture.needsUpdate = true;

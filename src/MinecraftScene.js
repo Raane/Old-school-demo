@@ -1,6 +1,6 @@
 function MinecraftScene(){
     /* starting time of this scene in milliseconds, must be defined */
-    this.startTime =52000;
+    this.startTime =42000;
     /* short name of this scene, must be defined */
     this.NAME = 'example';
 }
