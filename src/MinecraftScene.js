@@ -15,6 +15,7 @@ MinecraftScene.prototype.init = function(cb){
     this.cube_leg_thickness = 0.35;
     this.cubes = new Array();
     this.signs = new Array();
+    this.signs_added = false;
 
     this.initCoorArray();
     this.initLight();
@@ -30,7 +31,7 @@ MinecraftScene.prototype.initCubes = function(cb){
                 map: this.minecraft_texture
               });
     var extra_cube = new THREE.Mesh( new THREE.CubeGeometry(GU, GU, GU), this.minecraft_material);
-    extra_cube.scale.set(this.cube_size+this.cube_leg_thickness*1.04,this.cube_size+this.cube_leg_thickness*1.02, this.cube_size+this.cube_leg_thickness*1.02);
+    extra_cube.scale.set(this.cube_size+this.cube_leg_thickness*1.06,this.cube_size+this.cube_leg_thickness*1.06, this.cube_size+this.cube_leg_thickness*1.06);
     extra_cube.position.z = 0.1*GU;
     this.scene.add(extra_cube);
     for(var i=0;i<this.old_school_coordinates.length;i++) {
@@ -38,16 +39,45 @@ MinecraftScene.prototype.initCubes = function(cb){
         this.cubes[i].scale.set(this.cube_size+this.cube_leg_thickness*1.04,this.cube_size+this.cube_leg_thickness*1.02, this.cube_size+this.cube_leg_thickness*1.02);
         this.scene.add(this.cubes[i]);
     }
+    var sign_texture_images = [
+        "sign_old_school.png",
+        "sign_run.png",
+        "sign_ninjadev.png",
+        "sign_sigveseb.png"
+            ];
+    for(var i=0;i<sign_texture_images.length;i++) {
+        console.log('res/' + sign_texture_images[i]);
 
-    for(var i=0;i<1;i++) {
-        var sign_texture = THREE.ImageUtils.loadTexture( 'res/wood.png' );
+        var sign_materials = [
+            new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('res/sign.png')
+                }),
+                new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('res/sign.png')
+                }),
+                new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('res/sign.png')
+                }),
+                new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('res/sign.png')
+                }),
+                new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('res/sign.png')
+                }),
+                new THREE.MeshLambertMaterial({
+                    map: THREE.ImageUtils.loadTexture('res/' + sign_texture_images[i])
+                })
+        ];
+
+        var sign_texture = THREE.ImageUtils.loadTexture( 'res/' + sign_texture_images[i] );
         var sign_material = new THREE.MeshLambertMaterial({
                 map: sign_texture
               });
-        this.signs[i] = new THREE.Mesh( new THREE.CubeGeometry(GU, GU, GU), sign_material);
-        this.signs[i].scale.set(this.cube_size+this.cube_leg_thickness*1.04,this.cube_size+this.cube_leg_thickness*1.02, this.cube_size+this.cube_leg_thickness*1.02);
-        this.signs[i].position.z = 3*GU;
-        this.scene.add(this.signs[i]);
+        this.signs[i] = new THREE.Mesh( new THREE.CubeGeometry(GU, GU, GU), new THREE.MeshFaceMaterial(sign_materials));
+        this.signs[i].scale.set(this.cube_size+this.cube_leg_thickness*1.04,(this.cube_size+this.cube_leg_thickness*1.02)/2, (this.cube_size+this.cube_leg_thickness*1.02)/10);
+        this.signs[i].position.x=((4-this.sign_coordinates[i][0])*GU*4.35);
+        this.signs[i].position.y=-((4-this.sign_coordinates[i][2])*GU*4.35 - 10*GU);
+        this.signs[i].position.z=((4-this.sign_coordinates[i][1])*GU*4.35 - 60*GU) + 2*GU;
         
     }
 }
@@ -58,7 +88,6 @@ MinecraftScene.prototype.initLight = function() {
 
 MinecraftScene.prototype.reset = function(){
     /* reset all the variables! */
-
     this.camera.position.z = 9.2*GU;
 }
 
@@ -89,6 +118,14 @@ MinecraftScene.prototype.update = function(){
         //{x: -3153.68, y: 0, z: 1248.1999999999998
 
     }
+
+    if(this.t>9000 && !this.signs_added) {
+        for(var i=0;i<this.signs.length;i++) {
+            this.scene.add(this.signs[i]);
+        }
+        this.signs_added = true;
+    }
+
     if(this.t>12000 && this.t<16000) {
         this.camera.lookAt(new THREE.Vector3(0,0,-60*GU));
     }
@@ -122,7 +159,6 @@ MinecraftScene.prototype.update = function(){
 MinecraftScene.prototype.render = function(){
     /* do rendery stuff here */
     renderer.render(this.scene, this.camera);
-
 }
 
 MinecraftScene.prototype.initCoorArray = function(){
@@ -245,4 +281,10 @@ MinecraftScene.prototype.initCoorArray = function(){
     [4,3,5],
     [5,3,5]
         ];
+    this.sign_coordinates = [
+    [6,7,2],
+    [4,7,2],
+    [4,7,1],
+    [4,7,0]
+    ]
 }
