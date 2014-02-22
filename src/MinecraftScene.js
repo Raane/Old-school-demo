@@ -8,7 +8,7 @@ function MinecraftScene(){
 MinecraftScene.prototype.init = function(cb){
     /* do loady stuff here */
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(45, 16/9, 0.1, 2000*GU);
+    this.camera = new THREE.PerspectiveCamera(45, 16/9, 0.1, 10000*GU);
     this.scene.add(this.camera);
     
     this.cube_size = 4;
