@@ -107,7 +107,7 @@ MinecraftScene.prototype.initGround = function() {
 }
 
 MinecraftScene.prototype.initFog = function() {
-    this.scene.fog = new THREE.FogExp2( 0xffffff, 0.0000015*GU );
+    this.scene.fog = new THREE.FogExp2( 0xffffff, 0.0000005*GU );
 }
 
 MinecraftScene.prototype.initSkyBox = function() {
